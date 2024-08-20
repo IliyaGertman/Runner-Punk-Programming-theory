@@ -9,12 +9,12 @@ EditorBuildSettings:
     path: Assets/Scenes/Main Menu.unity
     guid: cedd0af7cb1492b4c9500a7030e6373d
   - enabled: 1
-    path: Assets/Scenes/Easy Mode.unity
+    path: Assets/Scenes/InGame.unity
     guid: 29767d527ab8434448d81a32e9869a24
-  - enabled: 1
+  - enabled: 0
     path: Assets/Scenes/Normal Mode.unity
     guid: c61f0bd852d20ed49a6198ce1698a5f6
-  - enabled: 1
+  - enabled: 0
     path: Assets/Scenes/Hardcore Mode.unity
     guid: 143224bbe489b1c499afd4d5d9f654c7
   m_configObjects: {}

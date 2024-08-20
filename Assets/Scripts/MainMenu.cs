@@ -9,29 +9,7 @@ public class MainMenu : MonoBehaviour
     private GameObject menu;
     
  
-   public void PlayEasy()
-    {
-
-        SceneManager.LoadScene("Easy Mode");
-    }
-
-    public void PlayNormal ()
-    {
-
-        SceneManager.LoadScene("Normal Mode");
-    }
-
-    public void PlayHardcore()
-    {
-
-        SceneManager.LoadScene("Hardcore Mode");
-    }
-
-    public void QuitGame()
-    {
-        Application.Quit();
-
-    }
+ 
 
     void Start()
     {

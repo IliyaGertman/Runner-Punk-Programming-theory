@@ -5,7 +5,7 @@ using UnityEngine;
 public class SpawnManager : MonoBehaviour
 {
     public GameObject[] obstaclePrefab;
-
+    public static SpawnManager instance;
     public float startDelay;
     public float repeatRateA;
     public float repeatRateB;
@@ -14,11 +14,34 @@ public class SpawnManager : MonoBehaviour
     private PlayerController playerControllerScript;
 
     // Start is called before the first frame update
-    void Start()
+    private void Awake()
     {
-        playerControllerScript = GameObject.Find("Player").GetComponent<PlayerController>();
+        if (instance != null)
+        {
+            Destroy(gameObject);
+            return;
+        }
 
-        Invoke("SpawnObstacle", startDelay);
+        instance = this;
+        DontDestroyOnLoad(gameObject);
+
+
+    }
+    void Start()
+    { 
+       if (DifficultyManager.instance != null)
+    {
+        DifficultyManager.instance.DifficultyParameterSetter();
+        Debug.Log("Difficulty after scene load: " + DifficultyManager.instance.gameDifficulty);
+    }
+      else
+    {
+    Debug.LogError("DifficultyManager instance is not available.");
+    }
+
+playerControllerScript = GameObject.Find("Player").GetComponent<PlayerController>();
+
+     Invoke("SpawnObstacle", startDelay);
     }
 
     // Update is called once per frame
@@ -26,6 +49,7 @@ public class SpawnManager : MonoBehaviour
     {
         
     }
+
     void SpawnObstacle()
     {
       if (playerControllerScript.gameOver == false)
