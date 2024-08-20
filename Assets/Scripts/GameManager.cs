@@ -36,16 +36,29 @@ public class GameManager : MonoBehaviour
 
     public void GameOver()
     {
-        gameOverText.gameObject.SetActive(true);
-        restartButton.gameObject.SetActive(true);
-        quitToMenuButton.gameObject.SetActive(true);
+        if (pcScript.gameWon!=true)
+
+        {
+            gameOverText.gameObject.SetActive(true);
+            restartButton.gameObject.SetActive(true);
+            quitToMenuButton.gameObject.SetActive(true);
+        }
+      
     }
 
     public void GameWon()
     {
-        winText.gameObject.SetActive(true);
-        restartButton.gameObject.SetActive(true);
-        quitToMenuButton.gameObject.SetActive(true);
+
+        if(pcScript.gameOver!=true)
+       
+        {
+
+            winText.gameObject.SetActive(true);
+            restartButton.gameObject.SetActive(true);
+            quitToMenuButton.gameObject.SetActive(true);
+
+        }
+       
     }
 
     public void RestartGame()
@@ -58,7 +71,10 @@ public class GameManager : MonoBehaviour
     public void QuitToMenu()
 
     {
+        pcScript.gameOver = true;
+        pcScript.gamePaused = false;
         SceneManager.LoadScene("Main Menu");
+        
     }
 
     public void PauseGame()

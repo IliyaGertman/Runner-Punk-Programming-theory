@@ -23,9 +23,7 @@ public class SpawnManager : MonoBehaviour
         }
 
         instance = this;
-        DontDestroyOnLoad(gameObject);
-
-
+      
     }
     void Start()
     { 
@@ -52,7 +50,7 @@ playerControllerScript = GameObject.Find("Player").GetComponent<PlayerController
 
     void SpawnObstacle()
     {
-      if (playerControllerScript.gameOver == false)
+        if (playerControllerScript.gameOver == false && playerControllerScript.gamePaused == false)
 
         {  int obstacleIndex = Random.Range(0, obstaclePrefab.Length);
             Vector3 spawnPos = new Vector3(-5.20f, 0.0f, Random.Range(-2.0f, 4.5f));
@@ -78,13 +76,9 @@ playerControllerScript = GameObject.Find("Player").GetComponent<PlayerController
             CancelInvoke();
 
         }
-
-        if (playerControllerScript.gamePaused == true)
-
-        {
-            Destroy(gameObject);
-        }
     }
+ 
+    
        
 
 

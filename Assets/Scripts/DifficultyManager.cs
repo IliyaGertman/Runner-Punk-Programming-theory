@@ -2,33 +2,59 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 public class DifficultyManager : MonoBehaviour
 {
     //    I need to: Create if statements for the game manager which control our difficulty parameters - Speed, Spawnrate and Countdown
     public static DifficultyManager instance;
     public int gameDifficulty;
-   
-  
-
-
     public int timeLeft;
 
     private void Awake()
     
     {
 
-        if (instance== null)
+        if (instance == null)
         {
             instance = this;
             DontDestroyOnLoad(gameObject);
-            
+
         }
-        else
+       else if (instance!=this)
         {
             Destroy(gameObject);
+
         }
     }
+
+    /// //////////////////////////////////////////////////////////////////////////////////////////
+
+
+    private void OnEnable()
+    {
+        // Subscribe to the sceneLoaded event
+        SceneManager.sceneLoaded += OnSceneLoaded;
+    }
+
+    private void OnDisable()
+    {
+        // Unsubscribe from the sceneLoaded event to avoid memory leaks
+        SceneManager.sceneLoaded -= OnSceneLoaded;
+    }
+
+    private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
+    {
+        Debug.Log("Scene loaded: " + scene.name);
+
+        // Check if the loaded scene is the main menu
+        if (scene.name == "Main Menu")  // Replace "Main Menu" with the actual name of your menu scene
+        {
+            AssignButtonListeners();
+        }
+    }
+
+    /// ////////////////////////////////////////////////////////////////////////////////////////////////////
 
     //when I press each button, it runs a method which sets it's own difficulty
     public void SetEasy()
@@ -64,7 +90,7 @@ public class DifficultyManager : MonoBehaviour
     {
 
 
-    if (gameDifficulty==1)
+        if (gameDifficulty == 1)
         {
 
             //speed = 1;
@@ -74,11 +100,11 @@ public class DifficultyManager : MonoBehaviour
             SpawnManager.instance.repeatRateB = 3f;
 
             //timeLeft = 30;
+            CountDownTimer.secondsLeft = 15;
 
-          
-        }   
-    
-    if (gameDifficulty == 2)
+        }
+
+        if (gameDifficulty == 2)
 
         {
 
@@ -88,7 +114,7 @@ public class DifficultyManager : MonoBehaviour
             SpawnManager.instance.repeatRateA = 1f;
             SpawnManager.instance.repeatRateB = 2f;
             //timeLeft = 60;
-
+            CountDownTimer.secondsLeft = 30;
 
 
         }
@@ -103,14 +129,46 @@ public class DifficultyManager : MonoBehaviour
             SpawnManager.instance.repeatRateA = 0.5f;
             SpawnManager.instance.repeatRateB = 1.0f;
             //timeLeft = 90;
+            CountDownTimer.secondsLeft = 60;
 
 
 
 
         }
 
-        //make sure the difficulty manager travels from the menu scene to the game scene (
     }
+
+    void AssignButtonListeners()
+    {
+
+        Debug.Log("buttons found?");
+        Button easyButton = GameObject.Find("EasyButton").GetComponent<Button>();  // Replace "EasyButton" with the actual name of your button
+        Button normalButton = GameObject.Find("MediumButton").GetComponent<Button>();  // Replace "NormalButton"
+        Button hardcoreButton = GameObject.Find("HardButton").GetComponent<Button>();  // Replace "HardcoreButton"
+       
+        if (easyButton != null)
+        
+        {
+        easyButton.onClick.AddListener(SetEasy); 
+        } 
+             
+
+            if (normalButton != null)
+           
+            { 
+            normalButton.onClick.AddListener(SetNormal);
+            
+            }   
+
+            if (hardcoreButton != null)
+
+            { 
+            hardcoreButton.onClick.AddListener(SetHardcore);
+            } 
+              
+    }
+        //make sure the difficulty manager travels from the menu scene to the game scene (
+    
 
 
 

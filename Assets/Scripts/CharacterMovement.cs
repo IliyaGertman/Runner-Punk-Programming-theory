@@ -19,7 +19,7 @@ public class CharacterMovement : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (playerControllerScript.gameOver == false && playerControllerScript.gamePaused==false)
+        if (playerControllerScript.gameOver == false && playerControllerScript.gamePaused==false && playerControllerScript.gameWon==false)
 
         {
             transform.Translate(Vector3.forward * Time.deltaTime * speed);
