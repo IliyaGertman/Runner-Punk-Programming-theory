@@ -41,6 +41,12 @@ public class MoveLeft : MonoBehaviour
             Destroy(gameObject, 5);
         }
 
+        if (transform.position.x > leftBound && gameObject.CompareTag("Collectible"))
+        {
+            Destroy(gameObject, 5);
+        }
+
+
 
 
 

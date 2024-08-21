@@ -135,12 +135,12 @@ public class PlayerController : MonoBehaviour
         int deathIndex = Random.Range(0, deathSound.Length);
         playerAudio.PlayOneShot(deathSound[deathIndex], (playerAudio.volume));
 
-
+         
 
     }
     public void OnCollisionEnter(Collision collision)
     {
-
+        sirenVol = siren.GetComponent<AudioSource>();
 
         enemyRigidbody = collision.gameObject.GetComponent<Rigidbody>();
         if (collision.gameObject.CompareTag("Ground"))
@@ -151,8 +151,10 @@ public class PlayerController : MonoBehaviour
         }
 
         else if (collision.gameObject.CompareTag("Obstacle"))
+
+
         {
-            sirenVol = siren.GetComponent<AudioSource>();
+          
             sirenVol.volume += 0.2f;
             SirenCloser(10000 / maxBump);
 
@@ -167,6 +169,21 @@ public class PlayerController : MonoBehaviour
 
             playerAnim.SetBool("Bump", true);
             bumped = true;
+
+
+        }
+        else if (collision.gameObject.CompareTag("Collectible"))
+       
+        {
+            Debug.Log("Bottle Pickup");
+            sirenVol.volume -= 0.2f;
+            SirenFarther(10000 / maxBump);
+
+            bumpCount -= 1;
+            ChaseFarther(100 / maxBump);
+
+            Destroy(collision.gameObject);
+   
 
 
         }
@@ -193,6 +210,12 @@ public class PlayerController : MonoBehaviour
 
     }
 
+    void ChaseFarther(float chase)
+    {
+        currentChase -= chase;
+        chaseBar.SetChase(currentChase);
+    }
+
     void ChaseCloser(float chase)
     {
         currentChase += chase;
@@ -206,7 +229,14 @@ public class PlayerController : MonoBehaviour
         siren.SetLowPass(currentHz);
     }
 
-    private void OnCollisionExit(Collision collision)
+    void SirenFarther(float lowpasslvl)
+
+    {
+        currentHz -= lowpasslvl;
+        siren.SetLowPass(currentHz);
+     }    
+
+        private void OnCollisionExit(Collision collision)
     {
 
         StartCoroutine(BumpWait(collision));

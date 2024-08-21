@@ -1209,6 +1209,7 @@ MonoBehaviour:
   - {fileID: 2946145821689867545, guid: 5f277b92425fa0d499f1a76968f57db1, type: 3}
   - {fileID: 6772614917120161097, guid: 569d25459423b8a4d86597bc1ee9f727, type: 3}
   - {fileID: 369435726428526969, guid: 123c8c63e9ee58b4797d55022ec3bc81, type: 3}
+  bottleCollectible: {fileID: 4514283577210530623, guid: ade47a43c4a870147b1d51d5ba34e4e8, type: 3}
   startDelay: 0
   repeatRateA: 0
   repeatRateB: 0
@@ -3411,7 +3412,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   textDisplay: {fileID: 675350626}
-  secondsLeft: 30
   takingAway: 0
   playerController: {fileID: 0}
   gameManager: {fileID: 0}
