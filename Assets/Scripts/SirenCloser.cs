@@ -17,7 +17,7 @@ public class SirenCloser : MonoBehaviour
     {
 
 
-        playerController = GameObject.Find("Player").GetComponent<PlayerController>();
+      
         sirenSound = gameObject.GetComponent<AudioSource>();
         sirenSound.volume = 0.1f;
         SetLowPass(0.0f);

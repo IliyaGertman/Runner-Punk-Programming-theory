@@ -7,6 +7,12 @@ TagManager:
   - Obstacle
   - Ground
   - Collectible
+  - Male
+  - Female
+  - Barrel
+  - Box
+  - Board
+  - Cone
   layers:
   - Default
   - TransparentFX

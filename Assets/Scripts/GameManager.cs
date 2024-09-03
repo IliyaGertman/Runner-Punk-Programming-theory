@@ -7,6 +7,7 @@ using UnityEngine.UI;
 
 public class GameManager : MonoBehaviour
 {
+    public static GameManager instance;
     public TextMeshProUGUI gameOverText;
     public PlayerController pcScript;
     public Button restartButton;
@@ -15,15 +16,23 @@ public class GameManager : MonoBehaviour
     public TextMeshProUGUI pauseText;
 
     // Start is called before the first frame update
-    void Start()
-    {
-        pcScript = GameObject.Find("Player").GetComponent<PlayerController>();
-        gameOverText.gameObject.SetActive(false);
-        restartButton.gameObject.SetActive(false);
-        quitToMenuButton.gameObject.SetActive(false);
-        winText.gameObject.SetActive(false);
-        pauseText.gameObject.SetActive(false);
 
+    private void Awake() //made a static instance of this script since it's the global game state manager. Reference it as such in PlayerController.
+    {
+
+
+
+        instance = this;
+
+    }
+
+        void Start()
+    {
+
+      
+        pcScript = GameObject.Find("Player").GetComponent<PlayerController>();
+
+        DeactivateInGameUI();
 
     }
 
@@ -39,9 +48,7 @@ public class GameManager : MonoBehaviour
         if (pcScript.gameWon!=true)
 
         {
-            gameOverText.gameObject.SetActive(true);
-            restartButton.gameObject.SetActive(true);
-            quitToMenuButton.gameObject.SetActive(true);
+            ActivateGameOverMenu();
         }
       
     }
@@ -52,11 +59,7 @@ public class GameManager : MonoBehaviour
         if(pcScript.gameOver!=true)
        
         {
-
-            winText.gameObject.SetActive(true);
-            restartButton.gameObject.SetActive(true);
-            quitToMenuButton.gameObject.SetActive(true);
-
+            ActivateGameWonMenu();
         }
        
     }
@@ -82,10 +85,8 @@ public class GameManager : MonoBehaviour
     {
         if (pcScript.gameOver == false)
         {
-            pauseText.gameObject.SetActive(true);
-            restartButton.gameObject.SetActive(true);
-            quitToMenuButton.gameObject.SetActive(true);
 
+            ActivatePauseMenu();
 
         }
 
@@ -105,4 +106,45 @@ public class GameManager : MonoBehaviour
 
         }
     }
+
+    public void ActivateGameOverMenu()
+
+    {
+
+        gameOverText.gameObject.SetActive(true);
+        restartButton.gameObject.SetActive(true);
+        quitToMenuButton.gameObject.SetActive(true);
+
     }
+
+    public void ActivateGameWonMenu()
+
+    {
+        winText.gameObject.SetActive(true);
+        restartButton.gameObject.SetActive(true);
+        quitToMenuButton.gameObject.SetActive(true);
+    }
+
+    public void ActivatePauseMenu()
+
+    {
+
+        pauseText.gameObject.SetActive(true);
+        restartButton.gameObject.SetActive(true);
+        quitToMenuButton.gameObject.SetActive(true);
+
+    }
+
+    public void DeactivateInGameUI()
+
+    {
+
+        gameOverText.gameObject.SetActive(false);
+        restartButton.gameObject.SetActive(false);
+        quitToMenuButton.gameObject.SetActive(false);
+        winText.gameObject.SetActive(false);
+        pauseText.gameObject.SetActive(false);
+
+    }
+
+}

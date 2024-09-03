@@ -2,17 +2,19 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class MaterialSound_Board : ObstacleParentScript
+public class MaterialSound_Cone : ObstacleParentScript
 {
-    public AudioSource boardAudioSource;
 
-    // Start is called before the first frame update
+    public AudioSource coneAudioSource;
+    
     void OnCollisionEnter(Collision collision)
     {
         if (collision.gameObject.CompareTag("Player"))
         {
-            AudioManager.instance.PlayBoardSound();
+            AudioManager.instance.PlayConeSound();
+        }
 
         }
     }
-}
+
+
