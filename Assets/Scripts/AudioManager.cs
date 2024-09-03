@@ -24,10 +24,10 @@ public class AudioManager : MonoBehaviour
 
 
     //obstacle-related-audio object declarations - there's a chance you'd want to have the audio source on the object itself, and call it from here (for distance and panning)
-    private AudioSource barrelAudioSource; // 
-    private AudioSource boardAudioSource;
-    private AudioSource coneAudioSource;
-    private AudioSource boxAudioSource;
+   // 
+
+
+
 
     public AudioClip[] barrelClip;
     public AudioClip[] boardClip;
@@ -36,7 +36,7 @@ public class AudioManager : MonoBehaviour
 
     //people (character-related audio object declaration)
 
-    private AudioSource charecterAudioSource; // there's a chance you'd want to have the audio source on the character itself, and call it from here (for distance and panning)
+   
 
 
     public AudioClip[] maleTauntClip;
@@ -99,50 +99,7 @@ public class AudioManager : MonoBehaviour
 
     }
 
-    public void AssignAudioSources(GameObject obstacle)
-    {
-        switch (obstacle.name)
-        {
-            case "Obstacle_Box(Clone)":
-                boxAudioSource = obstacle.GetComponent<AudioSource>();
-                break;
-            case "Obstacle_Barrel(Clone)":
-                barrelAudioSource = obstacle.GetComponent<AudioSource>();
-                break;
-            case "Obstacle_Board(Clone)":
-                boardAudioSource = obstacle.GetComponent<AudioSource>();
-                break;
-            case "Obstacle_Cone(Clone)":
-                coneAudioSource = obstacle.GetComponent<AudioSource>();
-                break;
-            case "Businessman 1(Clone)":
-                charecterAudioSource = obstacle.GetComponent<AudioSource>();
-                break;
-            case "Businessman 2 (clone)":
-                charecterAudioSource = obstacle.GetComponent<AudioSource>();
-                break;
-            case "Waitress 1 (clone)":
-                charecterAudioSource = obstacle.GetComponent<AudioSource>();
-                break;
-            case "Waitress 2 (clone)":
-                charecterAudioSource = obstacle.GetComponent<AudioSource>();
-                break;
-            case "Worker 1 (clone)":
-                charecterAudioSource = obstacle.GetComponent<AudioSource>();
-                break;
-            case "Worker 2 (clone)":
-                charecterAudioSource = obstacle.GetComponent<AudioSource>();
-                break;
-
-
-
-
-                // Add cases for other obstacles as needed
-        }
-    }
-
-
-
+   
 
     //-------------------------------------------PLAYER SOUNDS----------------------------------------------------------
 
@@ -184,82 +141,7 @@ public class AudioManager : MonoBehaviour
         }
     }
 
-    //---------------------------------------------OBSTACLE MATERIALS-------------------------------------------
-
-    public void PlayBarrelSound() // create condition where the player bumps into the barrel and call method from PlayerController. 
-
-    {
-
-        if (barrelAudioSource != null)
-        {
-            int barrelIndex = Random.Range(0, barrelClip.Length);
-            barrelAudioSource.PlayOneShot(barrelClip[barrelIndex], (barrelAudioSource.volume));
-        }
-
- 
-
-    }
-
-    public void PlayBoardSound()  
-
-    {
-
-        int boardIndex = Random.Range(0, boardClip.Length);
-        boardAudioSource.PlayOneShot(boardClip[boardIndex], (boardAudioSource.volume));
-
-    }
-
-    public void PlayBoxSound() 
-
-    {
-        int boxIndex = Random.Range(0, boxClip.Length);
-        boxAudioSource.PlayOneShot(boxClip[boxIndex], boxAudioSource.volume);
-    }
-
-    public void PlayConeSound() 
-
-    {
-        int coneIndex = Random.Range(0, coneClip.Length);
-        coneAudioSource.PlayOneShot(coneClip[coneIndex], (coneAudioSource.volume));
-
-
-    }
-
-    //-------------------------------------------HUMAN OBSTALCES-----------------------------------------------
-
-    public void PlayFemaleSound() // create condition where the player bumps into a Female and call method from PlayerController. 
-
-    {
-
-        int bumpIndex = Random.Range(0, femaleGruntClip.Length);
-        charecterAudioSource.PlayOneShot(femaleGruntClip[bumpIndex], (charecterAudioSource.volume));
-        int tailIndex = Random.Range(0, clothFoleyTailClip.Length);
-        charecterAudioSource.PlayOneShot(clothFoleyTailClip[tailIndex], (charecterAudioSource.volume));
-        int transientIndex = Random.Range(0, clothFoleyTransientClip.Length);
-        charecterAudioSource.PlayOneShot(clothFoleyTransientClip[transientIndex], (charecterAudioSource.volume));
-
-    }
-
-    public void PlayMaleSoundBump()
-
-    {
-
-        int bumpIndex = Random.Range(0, maleGruntClip.Length);
-        charecterAudioSource.PlayOneShot(maleGruntClip[bumpIndex], (charecterAudioSource.volume));
-        int tailIndex = Random.Range(0, clothFoleyTailClip.Length);
-        charecterAudioSource.PlayOneShot(clothFoleyTailClip[tailIndex], (charecterAudioSource.volume));
-        int transientIndex = Random.Range(0, clothFoleyTransientClip.Length);
-        charecterAudioSource.PlayOneShot(clothFoleyTransientClip[transientIndex], (charecterAudioSource.volume));
-
-    }
-
-    public void PlayMaleTaunt()
-    {
-
-        int tauntIndex = Random.Range(0, maleTauntClip.Length);
-        charecterAudioSource.PlayOneShot(maleTauntClip[tauntIndex], (charecterAudioSource.volume));
-
-    }
+   // Obstacle sound methods are called from the GameObjects themselves, clips are stored here. Centralized approach is not useful when spawning and destroying is happening frequently - AudioManager will call on AudioSources attached to the destroyed (outdated) objects. 
 
 
 

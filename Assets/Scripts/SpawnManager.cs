@@ -56,7 +56,7 @@ public class SpawnManager : MonoBehaviour
             int obstacleIndex = Random.Range(0, obstaclePrefab.Length);
                 Vector3 spawnPos = new Vector3(-5.20f, 0.0f, Random.Range(-2.0f, 4.5f));
                 GameObject newObstacle = Instantiate(obstaclePrefab[obstacleIndex], spawnPos, obstaclePrefab[obstacleIndex].transform.rotation);
-            AudioManager.instance.AssignAudioSources(newObstacle);
+    
                 Invoke("SpawnObstacle", Random.Range(repeatRateA, repeatRateB));
             }
         }
