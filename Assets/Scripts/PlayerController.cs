@@ -19,7 +19,7 @@ public class PlayerController : MonoBehaviour
     public float currentChase;
 
     public AudioSource playerAudioSource;
-
+   
 
 
     public float jumpForce = 10;
@@ -35,7 +35,11 @@ public class PlayerController : MonoBehaviour
     public bool bumped;
     public bool difficultyLevel;
     public bool gameWon;
+    private bool hasPlayedWinSound = false;
     public bool gamePaused;
+   
+   
+   
 
     // Start is called before the first frame update
     void Start()
@@ -50,7 +54,8 @@ public class PlayerController : MonoBehaviour
         chaseBar.SetMinChase(minChase);
     
         GameManager = GameObject.Find("GameManager").GetComponent<GameManager>();
-      
+        playerAudioSource = GetComponent<AudioSource>();
+        
     }
 
     // Update is called once per frame
@@ -83,9 +88,12 @@ public class PlayerController : MonoBehaviour
 
         {
 
-            gamePaused = true;
-
+     
             GameManager.PauseGame();
+            
+
+
+
         }
 
         else if (!gamePaused == false && Input.GetKeyDown(KeyCode.Escape))
@@ -94,12 +102,22 @@ public class PlayerController : MonoBehaviour
 
             gamePaused = false;
             GameManager.ResumeGame();
+          
+
 
         }        
 
         else if (gameWon==true && isOnGround && !gameOver)
         {
             transform.Translate(Vector3.forward * moveForce * Time.deltaTime);
+
+            if (!hasPlayedWinSound) // Check if the win sound has been played
+            {
+                AudioManager.instance.PlayWinSound();
+                AudioManager.instance.MusicFadeOut(6f);
+                hasPlayedWinSound = true; // Set the flag to true after playing the sound
+            }
+
         } 
         
 

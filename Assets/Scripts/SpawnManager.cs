@@ -10,6 +10,10 @@ public class SpawnManager : MonoBehaviour
     public float startDelay;
     public float repeatRateA;
     public float repeatRateB;
+    public float repeatRateCollectibleA;
+    public float repeatRatecCollectibleB;
+    private Coroutine spawnObstacleCoroutine;
+    private Coroutine spawnCollectibleCoroutine;
 
 
     private PlayerController playerControllerScript;
@@ -39,34 +43,91 @@ public class SpawnManager : MonoBehaviour
         }
 
         playerControllerScript = GameObject.Find("Player").GetComponent<PlayerController>();
+        StartSpawning();
+    }
+    void StartSpawning()
+    {
+        // Only start the coroutine if it isn't already running
+        if (spawnObstacleCoroutine == null && spawnCollectibleCoroutine==null)
+        {
+            spawnObstacleCoroutine = StartCoroutine(SpawnObstacleCoroutine());
+            spawnCollectibleCoroutine = StartCoroutine(SpawnCollectibleCoroutine());
+        }
 
-        Invoke("SpawnObstacle", startDelay);
-        Invoke("SpawnCollectible", startDelay);
-    } 
-        void Update()
+    }
+
+    void StopSpawning()
+    {
+        // Stop the spawning coroutine
+        if (spawnObstacleCoroutine != null && spawnCollectibleCoroutine!=null)
+        {
+            StopCoroutine(spawnObstacleCoroutine);
+            StopCoroutine(spawnCollectibleCoroutine);
+            spawnObstacleCoroutine = null;
+            spawnCollectibleCoroutine = null;
+        }
+    }
+
+
+    IEnumerator SpawnObstacleCoroutine()
+    {
+        while (!playerControllerScript.gameOver && !playerControllerScript.gamePaused)
+        {
+            // Spawn the obstacle
+            SpawnObstacle();
+
+            // Wait for a random time between repeatRateA and repeatRateB before spawning the next one
+            yield return new WaitForSeconds(Random.Range(repeatRateA, repeatRateB));
+        }
+
+    }
+
+
+    IEnumerator SpawnCollectibleCoroutine()
+    {
+        while (!playerControllerScript.gameOver && !playerControllerScript.gamePaused)
+        {
+            // Spawn the obstacle
+            SpawnCollectible();
+
+            // Wait for a random time between repeatRateA and repeatRateB before spawning the next one
+            yield return new WaitForSeconds(Random.Range(repeatRateA, repeatRateB));
+        }
+    }
+    void Update()
         {
 
         }
 
         void SpawnObstacle()
         {
-            if (playerControllerScript.gameOver == false && playerControllerScript.gamePaused == false)
+            if (!playerControllerScript.gameOver && !playerControllerScript.gamePaused)
 
             {
             int obstacleIndex = Random.Range(0, obstaclePrefab.Length);
                 Vector3 spawnPos = new Vector3(-5.20f, 0.0f, Random.Range(-2.0f, 4.5f));
-                GameObject newObstacle = Instantiate(obstaclePrefab[obstacleIndex], spawnPos, obstaclePrefab[obstacleIndex].transform.rotation);
+                Instantiate(obstaclePrefab[obstacleIndex], spawnPos, obstaclePrefab[obstacleIndex].transform.rotation);
     
-                Invoke("SpawnObstacle", Random.Range(repeatRateA, repeatRateB));
+               // Invoke("SpawnObstacle", Random.Range(repeatRateA, repeatRateB));
             }
         }
     void SpawnCollectible()
 
+
+
     {
 
-        Vector3 spawnPos = new Vector3(-5.20f, 2.0f, Random.Range(-2.0f, 4.5f));
-        Instantiate(bottleCollectible, spawnPos, bottleCollectible.transform.rotation);
-        Invoke("SpawnCollectible", Random.Range(repeatRateA, repeatRateB));
+        if (!playerControllerScript.gameOver && !playerControllerScript.gamePaused)
+      
+        
+        {
+            Vector3 spawnPos = new Vector3(-5.20f, 2.0f, Random.Range(-2.0f, 4.5f));
+            Instantiate(bottleCollectible, spawnPos, bottleCollectible.transform.rotation);
+           // Invoke("SpawnCollectible", Random.Range(repeatRateCollectibleA, repeatRatecCollectibleB));
+
+        }    
+
+       
     }
 
 
@@ -79,17 +140,28 @@ public class SpawnManager : MonoBehaviour
             if (playerControllerScript.gameWon == true)
 
             {
-                CancelInvoke();
+            //CancelInvoke();
 
-            }
+            StopSpawning();
+
+        }
             if (playerControllerScript.gameOver == true)
 
             {
-                CancelInvoke();
+                //CancelInvoke();
 
             }
         }
 
+    public void OnPauseGame()
+    {
+        StopSpawning();
+    }
+
+    public void OnResumeGame()
+    {
+        StartSpawning();
+    }
 
 
 
@@ -99,7 +171,8 @@ public class SpawnManager : MonoBehaviour
 
 
 
-    
+
+
 }
 
 

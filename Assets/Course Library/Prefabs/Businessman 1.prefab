@@ -421,6 +421,7 @@ GameObject:
   - component: {fileID: 5843788309187674028}
   - component: {fileID: 7134052994830089515}
   - component: {fileID: 2765510820632048970}
+  - component: {fileID: 7981671957738701997}
   m_Layer: 0
   m_Name: Businessman 1
   m_TagString: Obstacle
@@ -560,7 +561,7 @@ AudioSource:
   m_GameObject: {fileID: 6772614917120161097}
   m_Enabled: 1
   serializedVersion: 4
-  OutputAudioMixerGroup: {fileID: 24300002, guid: fceebbcdf645db3459eb1f0f86f0c5d1, type: 2}
+  OutputAudioMixerGroup: {fileID: 7135802581514226991, guid: fceebbcdf645db3459eb1f0f86f0c5d1, type: 2}
   m_audioClip: {fileID: 0}
   m_PlayOnAwake: 1
   m_Volume: 1
@@ -660,7 +661,19 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   pcScript: {fileID: 0}
-  charecterAudioSource: {fileID: 0}
+  characterAudioSource: {fileID: 0}
+--- !u!114 &7981671957738701997
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6772614917120161097}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: feb21a4d27b0e5a489122b929386563d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &6772614917120161101
 GameObject:
   m_ObjectHideFlags: 0

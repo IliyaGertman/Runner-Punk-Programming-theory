@@ -7,11 +7,13 @@ public class ObstacleParentScript : MonoBehaviour
     public PlayerController pcScript;
     private Rigidbody obstacleRigidbody;
     private Animator playerAnimator;
+
     // Start is called before the first frame update
     void Start()
     {
         pcScript = GameObject.Find("Player").GetComponent<PlayerController>();
         playerAnimator = GameObject.Find("Player").GetComponent<Animator>();
+  
         //siren = siren.GetComponent<AudioSource>();
     }
 
@@ -20,7 +22,7 @@ public class ObstacleParentScript : MonoBehaviour
     {
         
     }
-    //since we're colliding with other objects, this script probably neds to be put on the player, alongside PlayerController. 
+    //since we're colliding with other objects, this script probably needs to be put on the player, alongside PlayerController. 
     public void OnCollisionEnter(Collision collision)
     {
       
@@ -38,53 +40,58 @@ public class ObstacleParentScript : MonoBehaviour
 
         {
 
-          AudioManager.instance.sirenAudioSource.volume += 0.2f;
-          AudioManager.instance.SirenCloser(10000 / pcScript.maxBump);
+            AudioManager.instance.sirenAudioSource.volume += 0.2f;
+            AudioManager.instance.SirenCloser(10000 / pcScript.maxBump);
+            AudioManager.instance.PlayBumpSound();
 
             pcScript.bumpCount += 1;
             pcScript.ChaseCloser(100 / pcScript.maxBump);
             obstacleRigidbody.AddForce(Vector3.left * pcScript.bumpForce, ForceMode.Impulse);
 
-            pcScript.explosionParticle.Play();
+         
 
-            AudioManager.instance.PlayCollectibleSound();
+
 
             playerAnimator.SetBool("Bump", true);
             pcScript.bumped = true;
 
         }
 
-    
+
         else if (collision.gameObject.CompareTag("Collectible"))
-       
+
         {
             Debug.Log("Bottle Pickup");
-            AudioManager.instance.sirenAudioSource.volume -= 0.2f;
+
+            if (AudioManager.instance.sirenAudioSource.volume > 0.0f)
+            {
+                AudioManager.instance.sirenAudioSource.volume -=0.2f;
+            }
             AudioManager.instance.SirenFarther(10000 / pcScript.maxBump);
-            pcScript.bumpCount -= 1;
+
+            pcScript.bumpCount = Mathf.Max(pcScript.bumpCount - 1, 0); // Ensure bumpCount doesn't go negative
             pcScript.ChaseFarther(100 / pcScript.maxBump);
-
-             Destroy(collision.gameObject);
-
-
-
+            Destroy(collision.gameObject);
 
 
         }
         
          if (pcScript.bumpCount >= pcScript.maxBump)
-         {
-          Debug.Log("You're busted!");
-          pcScript.gameOver = true;
 
+        {  
+         Debug.Log("You're busted!");
+         pcScript.gameOver = true;
+         AudioManager.instance.PlayPlayerDeathSound();
          GameManager.instance.GameOver();
          playerAnimator.SetBool("Death_b", true);
          playerAnimator.SetInteger("DeathType_int", 2);
          pcScript.dirtParticle.Stop();
-
+         AudioManager.instance.MusicFadeOut(2f);
          AudioManager.instance.sirenAudioSource.volume = 0.0f;
          AudioManager.instance.PlayArrest();
-         pcScript.bumpCount = 1;
+        
+
+    
 
 
 
@@ -94,6 +101,8 @@ public class ObstacleParentScript : MonoBehaviour
 
     }
 }
+
+
 
 
 

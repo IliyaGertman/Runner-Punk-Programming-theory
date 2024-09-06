@@ -98,9 +98,13 @@ public class DifficultyManager : MonoBehaviour
             //spawnRate = 1;
             SpawnManager.instance.repeatRateA = 1f;
             SpawnManager.instance.repeatRateB = 3f;
+            SpawnManager.instance.repeatRateCollectibleA = 3f;
+            SpawnManager.instance.repeatRateCollectibleA = 6f;
+
+
 
             //timeLeft = 30;
-            CountDownTimer.secondsLeft = 15;
+            CountDownTimer.secondsLeft = 30;
 
         }
 
@@ -113,8 +117,10 @@ public class DifficultyManager : MonoBehaviour
             //spawnRate = 2;
             SpawnManager.instance.repeatRateA = 1f;
             SpawnManager.instance.repeatRateB = 2f;
+            SpawnManager.instance.repeatRateCollectibleA = 6f;
+            SpawnManager.instance.repeatRateCollectibleA = 9f;
             //timeLeft = 60;
-            CountDownTimer.secondsLeft = 30;
+            CountDownTimer.secondsLeft = 45;
 
 
         }
@@ -128,6 +134,8 @@ public class DifficultyManager : MonoBehaviour
             //spawnRate = 3;
             SpawnManager.instance.repeatRateA = 0.5f;
             SpawnManager.instance.repeatRateB = 1.0f;
+            SpawnManager.instance.repeatRateCollectibleA = 9f;
+            SpawnManager.instance.repeatRateCollectibleA = 12f;
             //timeLeft = 90;
             CountDownTimer.secondsLeft = 60;
 
